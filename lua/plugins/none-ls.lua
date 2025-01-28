@@ -14,6 +14,9 @@ return {
                     -- Python
                     -- "isort",
                     "black",
+
+                    -- C / C++
+                    "clang-format",
                 },
             })
         end,
@@ -40,6 +43,11 @@ return {
                     -- null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black.with({
                         extra_args = { "--line-length", "120" },
+                    }),
+
+                    -- C / C++
+                    null_ls.builtins.formatting.clang_format.with({
+                        extra_args = { "--indent-width", "4", "--line-length", "120" },
                     }),
                 },
             })

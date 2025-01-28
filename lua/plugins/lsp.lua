@@ -13,6 +13,7 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "pyright",
+                    "clangd",
                 },
                 automatic_installation = true,
             })
@@ -52,6 +53,7 @@ return {
             local lspconfig = require("lspconfig")
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
+            lspconfig.clangd.setup({})
         end,
     },
 }
