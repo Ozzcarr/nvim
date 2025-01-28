@@ -10,6 +10,9 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 vim.opt.autoindent = true
 vim.opt.list = true      -- Show tab characters and trailing whitespace
 
+-- Scroll
+vim.o.scrolloff = 10
+
 -- Turn off [No Name] buffer
 vim.opt.hidden = false
 
