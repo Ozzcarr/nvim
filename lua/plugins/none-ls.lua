@@ -28,7 +28,9 @@ return {
             null_ls.setup({
                 sources = {
                     -- Lua
-                    null_ls.builtins.formatting.stylua,
+                    null_ls.builtins.formatting.stylua.with({
+                        extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
+                    }),
 
                     -- Javascript
                     require("none-ls.diagnostics.eslint_d"),

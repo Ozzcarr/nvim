@@ -27,7 +27,7 @@ map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc 
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
 
 -- Pasting
-map("x", "<leader>p", "\"_dP", { desc = "Paste without removing copied text" })
+map("x", "<leader>p", '"_dP', { desc = "Paste without removing copied text" })
 
 -- Lazy
 map("n", "<leader>l", ":Lazy<cr>", { desc = "Lazy" })
@@ -46,9 +46,8 @@ map("n", "<leader><Esc>", "<cmd>qa<cr>", { desc = "Quit All" })
 map("n", "<leader>y", [["+yy]], { desc = "Yank to clipboard" })
 map("v", "<leader>y", [["+y]], { desc = "Yank to clipboard" })
 map("n", "<leader>Y", function()
-  local current_line = vim.fn.line(".")
-  local current_col = vim.fn.col(".")
-  vim.cmd("normal! ggVG\"+y")
-  vim.fn.cursor(current_line, current_col)
+    local current_line = vim.fn.line(".")
+    local current_col = vim.fn.col(".")
+    vim.cmd('normal! ggVG"+y')
+    vim.fn.cursor(current_line, current_col)
 end, { desc = "Yank all to clipboard" })
-
