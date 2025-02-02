@@ -8,7 +8,6 @@ return {
                     "stylua",
 
                     -- Javascript
-                    "eslint_d",
                     "prettier",
 
                     -- Python
@@ -36,8 +35,9 @@ return {
                     }),
 
                     -- Javascript
-                    require("none-ls.diagnostics.eslint_d"),
-                    null_ls.builtins.formatting.prettier,
+                    null_ls.builtins.formatting.prettier.with({
+                        extra_args = { "--print-width", "120" },
+                    }),
 
                     -- Python
                     -- null_ls.builtins.formatting.isort,

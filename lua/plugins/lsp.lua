@@ -12,6 +12,7 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
+                    "ts_ls",
                     "pyright",
                     "clangd",
                 },
@@ -65,6 +66,12 @@ return {
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
             lspconfig.clangd.setup({})
+            lspconfig.ts_ls.setup({
+                on_attach = function(client, _)
+                    -- Disable tsserver's formatting capability
+                    client.server_capabilities.documentFormattingProvider = false
+                end,
+            })
         end,
     },
 }
