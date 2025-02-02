@@ -53,11 +53,11 @@ return {
             -- Change flex to lex to make treesitter syntax highlight correctly
             vim.api.nvim_exec(
                 [[
-              augroup FileTypeFlex
-                autocmd!
-                autocmd BufRead,BufNewFile *.flex setfiletype lex
-              augroup END
-            ]],
+                  augroup FileTypeFlex
+                    autocmd!
+                    autocmd BufRead,BufNewFile *.flex setfiletype lex
+                  augroup END
+                ]],
                 false
             )
 
