@@ -3,7 +3,9 @@ return {
         "williamboman/mason.nvim",
         config = function()
             vim.keymap.set("n", "<leader>m", ":Mason<cr>", { desc = "Open Mason" })
-            require("mason").setup()
+            require("mason").setup({
+                PATH = "prepend",
+            })
         end,
     },
     {
@@ -24,6 +26,17 @@ return {
         "neovim/nvim-lspconfig",
         init = function()
             vim.opt.signcolumn = "yes" -- Reserve a space to the left to prevent shifting of layout
+            vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics,
+                {
+                    virtual_text = false,
+                    signs = true,
+                    update_in_insert = false,
+                    underline = true,
+                }
+            )
+
+            vim.keymap.set("n", "<leader>e", ":lua vim.diagnostic.open_float()<cr>", { desc = "Show line diagnostics" })
         end,
         config = function()
             -- Add capabilities

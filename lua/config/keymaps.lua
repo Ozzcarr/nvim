@@ -51,3 +51,7 @@ map("n", "<leader>Y", function()
     vim.cmd('normal! ggVG"+y')
     vim.fn.cursor(current_line, current_col)
 end, { desc = "Yank all to clipboard" })
+
+-- Window Splitting Keymaps
+map("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
+map("n", "<leader>h", "<cmd>split<cr>", { desc = "Horizontal Split" })

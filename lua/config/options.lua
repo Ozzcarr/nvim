@@ -26,7 +26,11 @@ end
 
 -- Change prefix before diagnostics text
 vim.diagnostic.config({
-  virtual_text = {
-    prefix = '󰅙',
-  }
+    virtual_text = {
+      prefix = '󰅙',
+    },
+    float = {
+        source = "always",
+        border = "rounded"
+    }
 })
