@@ -55,3 +55,7 @@ end, { desc = "Yank all to clipboard" })
 -- Window Splitting Keymaps
 map("n", "<leader>v", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 map("n", "<leader>h", "<cmd>split<cr>", { desc = "Horizontal Split" })
+
+-- Goto errors
+map("n", "ge", vim.diagnostic.goto_next, { desc = "Goto next error" })
+map("n", "gE", vim.diagnostic.goto_prev, { desc = "Goto previous error" })
