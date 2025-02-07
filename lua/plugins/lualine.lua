@@ -34,8 +34,16 @@ return {
         -- Run on startup
         update_git_branch()
 
-        -- Fix: Now `update_git_branch` is available when auto-session triggers `DirChanged`
+        -- Update git branch on change
         vim.cmd([[autocmd DirChanged * lua _G.update_git_branch()]])
+        vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+            callback = function()
+                -- Only update if inside a Git repo
+                if vim.fn.isdirectory(".git") == 1 then
+                    update_git_branch()
+                end
+            end,
+        })
 
         require("lualine").setup({
             options = {
