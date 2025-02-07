@@ -6,35 +6,36 @@ return {
         vim.g.gitblame_display_virtual_text = 0
 
         local cached_branch = nil
+
         local function get_git_branch()
-            -- Check if the branch is already cached and return it
-            if cached_branch then
-                return cached_branch
-            end
-
-            -- Detect if running on Windows
-            local is_windows = package.config:sub(1, 1) == "\\"
-            local cmd = is_windows and "git rev-parse --abbrev-ref HEAD 2>nul"
-                or "git rev-parse --abbrev-ref HEAD 2>/dev/null"
-
-            -- Run command safely
-            local handle = io.popen(cmd)
-            if not handle then
-                cached_branch = "No Branch"
-                return cached_branch
-            end
-
-            local branch = handle:read("*a") or ""
-            handle:close()
-
-            branch = branch:gsub("%s+", "") -- Trim whitespace (newlines, spaces)
-            cached_branch = branch ~= "" and branch or "No Branch"
-
-            return cached_branch
+            return cached_branch or "Loading..."
         end
 
-        -- Reset cache when changing directories
-        vim.cmd([[autocmd DirChanged * lua cached_branch = nil]])
+        -- Declare globally to avoid "nil value" errors
+        _G.update_git_branch = function()
+            local is_windows = package.config:sub(1, 1) == "\\"
+            local cmd = is_windows and "git rev-parse --abbrev-ref HEAD 2>NUL"
+                or "git rev-parse --abbrev-ref HEAD 2>/dev/null"
+
+            vim.fn.jobstart(cmd, {
+                on_stdout = function(_, data)
+                    if data and #data > 0 and data[1] ~= "" then
+                        cached_branch = data[1]
+                    else
+                        cached_branch = "No Branch"
+                    end
+                    -- Force refresh lualine after fetching the branch
+                    vim.cmd("redrawstatus")
+                end,
+                stdout_buffered = true,
+            })
+        end
+
+        -- Run on startup
+        update_git_branch()
+
+        -- Fix: Now `update_git_branch` is available when auto-session triggers `DirChanged`
+        vim.cmd([[autocmd DirChanged * lua _G.update_git_branch()]])
 
         require("lualine").setup({
             options = {
